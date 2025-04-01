@@ -1,8 +1,9 @@
+import "reflect-metadata"
 import express, { Express } from 'express'
 import { config as dotenvConfig } from 'dotenv'
 import cors from 'cors'
-import logger from './Utils/Logger'
-import AppRouter from './Routers'
+import logger from './utils/Logger'
+import AppRouter from './routers'
 
 class Server {
   private LOCAL_ENV_URL: string
