@@ -29,17 +29,12 @@ class PostgresImplementation implements DataBaseInterface<DataSource> {
       
     } catch (error) {
       logger.error('PostgreSQL => Error initializing the database:', error)
-      throw new Error('PostgreSQL => Database initialization failed')
     }
   }
 
   getInstance(): DataSource {
-    if (!this.dataBaseConnection.isInitialized) {
-      throw new Error('PostgreSQL => Database connection is not initialized')
-    }
     return this.dataBaseConnection
   }
 }
 
-const PostgresImpl = new PostgresImplementation()
-export { PostgresImpl }
+export const PostgresImpl = new PostgresImplementation()

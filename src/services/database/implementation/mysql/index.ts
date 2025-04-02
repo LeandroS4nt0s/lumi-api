@@ -29,17 +29,12 @@ class MySQLImplementation implements DataBaseInterface<DataSource> {
       
     } catch (error) {
       logger.error('MySQL => Error initializing the database:', error)
-      throw new Error('MySQL => Database initialization failed')
     }
   }
 
   getInstance(): DataSource {
-    if (!this.dataBaseConnection.isInitialized) {
-      throw new Error('MySQL => Database connection is not initialized')
-    }
     return this.dataBaseConnection
   }
 }
 
-const MySQLImpl = new MySQLImplementation()
-export { MySQLImpl }
+export const MySQLImpl = new MySQLImplementation()
