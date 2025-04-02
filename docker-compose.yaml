@@ -8,13 +8,13 @@ services:
     volumes:
       - .:/home/node/app
 
-  # db_mysql:
-  #   image: mysql:8.0-oracle
-  #   container_name: mysql_container
-  #   env_file:
-  #     - .env
-  #   ports:
-  #     - "3306:3306"
+  db_mysql:
+    image: mysql:8.0-oracle
+    container_name: mysql_container
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
   
   db_postgresql:
     container_name: postgres_container
