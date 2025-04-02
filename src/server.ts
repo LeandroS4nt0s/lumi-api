@@ -1,9 +1,10 @@
-import "reflect-metadata"
+import 'reflect-metadata'
 import express, { Express } from 'express'
 import { config as dotenvConfig } from 'dotenv'
 import cors from 'cors'
 import logger from './utils/Logger'
 import AppRouter from './routers'
+import { DataBaseService } from './services/database'
 
 class Server {
   private LOCAL_ENV_URL: string
@@ -21,6 +22,7 @@ class Server {
     try {
       this.loadEnvVariables()
       this.setMiddlewares()
+      this.initializeDataBaseService()
       this.setRoutes()
       await this.startServer()
     } catch (error) {
@@ -68,6 +70,9 @@ class Server {
     } else {
       logger.error('Error during server initialization: Unknown error')
     }
+  }
+  private async initializeDataBaseService() : Promise<void> {
+     await DataBaseService.getInstance().initialize()
   }
 }
 
