@@ -22,7 +22,7 @@ class Server {
     try {
       this.loadEnvVariables()
       this.setMiddlewares()
-      this.initializeDataBaseService()
+      await this.initializeDataBaseService()
       this.setRoutes()
       await this.startServer()
     } catch (error) {
@@ -72,7 +72,7 @@ class Server {
     }
   }
   private async initializeDataBaseService() : Promise<void> {
-     await DataBaseService.getInstance().initialize()
+    await DataBaseService.getInstance().initialize()
   }
 }
 

@@ -1,6 +1,6 @@
 import { DataBaseInterface } from './databaseInterface'
 import { DataSource } from 'typeorm'
-import { PostgresImpl } from './implementation'
+import { MySQLImpl } from './implementation'
 
-const DataBaseService: DataBaseInterface<DataSource> = PostgresImpl
+const DataBaseService: DataBaseInterface<DataSource> = MySQLImpl
 export { DataBaseService }
