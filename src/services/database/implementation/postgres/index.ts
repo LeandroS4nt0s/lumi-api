@@ -13,11 +13,11 @@ class PostgresImplementation implements DataBaseInterface<DataSource> {
     try {
       this.dataBaseConnection = new DataSource({
         type: 'postgres',
-        host: process.env.DB_HOST || 'localhost',
-        port: Number(process.env.DB_PORT) || 5432,
-        username: process.env.DB_USERNAME || 'root',
-        password: process.env.DB_PASSWORD || 'admin',
-        database: process.env.DB_DATABASE || 'lumi_postgresl_db',
+        host: process.env.POSTGRES_DB_HOST || 'localhost',
+        port: Number(process.env.POSTGRES_DB_PORT) || 5432,
+        username: process.env.POSTGRES_USER || 'root',
+        password: process.env.POSTGRES_PASSWORD || 'root',
+        database: process.env.POSTGRES_DB || 'lumi_postgresql_db',
         entities: [],
         synchronize: true,
         logging: false

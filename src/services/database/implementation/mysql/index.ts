@@ -13,11 +13,11 @@ class MySQLImplementation implements DataBaseInterface<DataSource> {
     try {
       this.dataBaseConnection = new DataSource({
         type: 'mysql',
-        host: process.env.DB_HOST || 'localhost',
-        port: Number(process.env.DB_PORT) || 3306,
-        username: process.env.DB_USERNAME || 'root',
-        password: process.env.DB_PASSWORD || 'admin',
-        database: process.env.DB_DATABASE || 'lumi_mysql_db',
+        host: process.env.MYSQL_DB_HOST || 'localhost',
+        port: Number(process.env.MYSQL_DB_PORT) || 3306,
+        username: process.env.MYSQL_USER || 'root',
+        password: process.env.MYSQL_PASSWORD || 'root',
+        database: process.env.MYSQL_DATABASE || 'lumi_mysql_db',
         entities: [],
         synchronize: true,
         logging: false
