@@ -1,4 +1,4 @@
 export interface DataBaseInterface<INSTANCE> {
-  start(): void
+  start(): Promise<void>
   getInstance(): INSTANCE
 }

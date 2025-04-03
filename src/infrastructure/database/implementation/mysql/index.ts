@@ -1,8 +1,10 @@
 import { DataSource } from 'typeorm'
 import { DataBaseInterface } from '../../databaseInterface'
-import logger from '../../../../utils/Logger'
+import logger from '../../../logger'
+import { injectable } from 'tsyringe'
 
-class MySQLImplementation implements DataBaseInterface<DataSource> {
+@injectable()
+export class MySQLImplementation implements DataBaseInterface<DataSource> {
   private dataBaseConnection!: DataSource
 
   constructor() {
@@ -36,5 +38,3 @@ class MySQLImplementation implements DataBaseInterface<DataSource> {
     return this.dataBaseConnection
   }
 }
-
-export const MySQLImpl = new MySQLImplementation()

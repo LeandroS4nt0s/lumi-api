@@ -1,30 +1,28 @@
 import 'reflect-metadata'
 import express, { Express } from 'express'
-import { config as dotenvConfig } from 'dotenv'
 import cors from 'cors'
-import logger from './utils/Logger'
-import AppRouter from './routers'
-import { DataBaseService } from './services/database'
+import { config as dotenvConfig } from 'dotenv'
+import logger from './infrastructure/logger'
+import AppRouter from './interfaces/http/routers'
+import { DataBaseInterface } from './infrastructure/database/databaseInterface'
+import { container } from './container'
 
-class Server {
-  private LOCAL_ENV_URL: string
+export class Server {
   private app: Express
   private port: string | number
+  private LOCAL_ENV_URL = 'http://localhost:3000'
 
   constructor() {
     this.app = express()
     this.port = process.env.PORT || 3000
-    this.LOCAL_ENV_URL = 'http://localhost:3000'
-    this.init()
   }
 
-  private async init(): Promise<void> {
+  public async initialize(): Promise<void> {
     try {
       this.loadEnvVariables()
       this.setMiddlewares()
       await this.initializeDataBaseService()
       this.setRoutes()
-      await this.startServer()
     } catch (error) {
       this.handleError(error)
     }
@@ -58,7 +56,11 @@ class Server {
     this.app.use('/api', AppRouter)
   }
 
-  private async startServer(): Promise<void> {
+  private async initializeDataBaseService(): Promise<void> {
+    container.resolve<DataBaseInterface<unknown>>('DataBaseService')  
+  }
+
+  public start(): void {
     this.app.listen(this.port, () => {
       logger.info(`Server is running on port ${this.port}`)
     })
@@ -71,9 +73,4 @@ class Server {
       logger.error('Error during server initialization: Unknown error')
     }
   }
-  private async initializeDataBaseService() : Promise<void> {
-    await DataBaseService.getInstance().initialize()
-  }
 }
-
-new Server()

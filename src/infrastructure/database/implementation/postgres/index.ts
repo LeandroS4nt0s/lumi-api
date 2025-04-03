@@ -1,8 +1,10 @@
 import { DataSource } from 'typeorm'
 import { DataBaseInterface } from '../../databaseInterface'
-import logger from '../../../../utils/Logger'
+import logger from '../../../logger'
+import { injectable } from 'tsyringe'
 
-class PostgresImplementation implements DataBaseInterface<DataSource> {
+@injectable()
+export class PostgresImplementation implements DataBaseInterface<DataSource> {
   private dataBaseConnection!: DataSource
 
   constructor() {
@@ -36,5 +38,3 @@ class PostgresImplementation implements DataBaseInterface<DataSource> {
     return this.dataBaseConnection
   }
 }
-
-export const PostgresImpl = new PostgresImplementation()
