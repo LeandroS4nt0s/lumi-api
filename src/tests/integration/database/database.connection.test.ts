@@ -3,11 +3,13 @@ import '../../../container'
 import { DataSource } from 'typeorm'
 import dotenv from 'dotenv'
 import logger from '../../../infrastructure/logger'
-import { DataBaseService } from '../../../infrastructure/database'
+import { container } from '../../../container'
+import { DataBaseInterface } from '../../../infrastructure/database/databaseInterface'
 
 dotenv.config()
 
 describe('Database Connection - Integration', () => {
+  const DataBaseService = container.resolve<DataBaseInterface<unknown>>('DataBaseService')
   let dataSource: DataSource
 
   beforeAll(async () => {

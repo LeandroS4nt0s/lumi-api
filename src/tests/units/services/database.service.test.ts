@@ -2,7 +2,8 @@ import 'reflect-metadata'
 import '../../../container'
 import { DataSource } from 'typeorm'
 import logger from '../../../infrastructure/logger'
-import { DataBaseService } from '../../../infrastructure/database'
+import { DataBaseInterface } from '../../../infrastructure/database/databaseInterface'
+import { container } from '../../../container'
 
 jest.mock('typeorm', () => {
   const mockDataSource = {
@@ -23,6 +24,7 @@ jest.mock('typeorm', () => {
 })
 
 describe('Database Service - Unit', () => {
+  const DataBaseService = container.resolve<DataBaseInterface<unknown>>('DataBaseService')
   let databaseService: DataSource
 
   beforeAll(async () => {

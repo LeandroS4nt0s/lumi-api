@@ -3,7 +3,7 @@ import express, { Express } from 'express'
 import cors from 'cors'
 import { config as dotenvConfig } from 'dotenv'
 import logger from './infrastructure/logger'
-import AppRouter from './interfaces/http/routers'
+import AppRouter from './interfaces/http'
 import { DataBaseInterface } from './infrastructure/database/databaseInterface'
 import { container } from './container'
 
