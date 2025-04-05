@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { injectable } from "tsyringe"
-import { ExtractInvoicesUseCase } from "../../application/use-cases/ExtractInvoicesUseCase"
 import { container } from "../../container"
+import { ExtractInvoicesUseCase } from '../../application/use-cases/invoices/ExtractInvoicesUseCase'
 
 @injectable()
 export class ExtractInvoicesController {

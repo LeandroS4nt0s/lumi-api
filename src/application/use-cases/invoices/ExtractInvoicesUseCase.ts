@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe'
-import { InvoiceRepositoryInterface } from '../../domain/repositories/InvoiceRepositoryInterface'
-import { InvoiceExtractorInterface } from '../../domain/services/InvoiceExtractorInterface'
-import { DriveServiceInterface } from '../../domain/services/DriveServiceInterface'
+import { InvoiceRepositoryInterface } from '../../../domain/repositories/InvoiceRepositoryInterface'
+import { InvoiceExtractorInterface } from '../../../domain/services/InvoiceExtractorInterface'
+import { DriveServiceInterface } from '../../../domain/services/DriveServiceInterface'
 
 @injectable()
 export class ExtractInvoicesUseCase {

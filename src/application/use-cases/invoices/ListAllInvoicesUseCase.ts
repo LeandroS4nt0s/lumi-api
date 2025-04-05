@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe'
-import { InvoiceRepositoryInterface } from '../../domain/repositories/InvoiceRepositoryInterface'
-import { InvoiceEntity } from '../../domain/entities/InvoiceEntity'
+import { InvoiceRepositoryInterface } from '../../../domain/repositories/InvoiceRepositoryInterface'
+import { InvoiceEntity } from '../../../domain/entities/InvoiceEntity'
 
 @injectable()
 export class ListAllInvoicesUseCase {

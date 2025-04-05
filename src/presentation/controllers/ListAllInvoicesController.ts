@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
-import { ListAllInvoicesUseCase } from '../../application/use-cases/ListAllInvoicesUseCase'
+import { ListAllInvoicesUseCase } from '../../application/use-cases/invoices/ListAllInvoicesUseCase'
 
 
 export class ListAllInvoicesController {

@@ -2,4 +2,10 @@
 GET http://localhost:3000/api/invoices
 
 ###
+GET http://localhost:3000/api/invoices/filter?clientNumber=7202210726&month=ABR/2024
+
+###
+GET http://localhost:3000/api/invoices/filter?month=JAN/2024
+
+###
 POST http://localhost:3000/api/extract

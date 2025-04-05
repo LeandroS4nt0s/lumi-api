@@ -4,6 +4,7 @@ import { InvoiceRepositoryInterface } from '../../../domain/repositories/Invoice
 import { InvoiceEntity } from '../../../domain/entities/InvoiceEntity'
 import { InvoiceModel } from '../models/InvoiceModel'
 import { DataBaseInterface } from '../databaseInterface'
+import { FilterInvoicesDTO } from '../../../application/use-cases/invoices/dtos/FilterInvoicesDTO'
 
 @injectable()
 export class InvoiceRepositoryImpl implements InvoiceRepositoryInterface {
@@ -66,7 +67,9 @@ export class InvoiceRepositoryImpl implements InvoiceRepositoryInterface {
     return results.map(this.toEntity)
   }
 
-  async findByFilters(clientNumber?: string, month?: string): Promise<InvoiceEntity[]> {
+  async findByFilters(filtersDTO: FilterInvoicesDTO): Promise<InvoiceEntity[]> {
+    let { clientNumber, month } =  filtersDTO;
+
     const repo = this.dataSource.getRepository(InvoiceModel)
 
     const query = repo.createQueryBuilder('invoice')
