@@ -7,8 +7,10 @@ export class GoogleDriveService implements DriveServiceInterface {
   private drive
 
   constructor() {
+    const keyFilePath = process.env.GOOGLE_APPLICATION_CREDENTIALS!
+
     const auth = new google.auth.GoogleAuth({
-      keyFile: JSON.parse(process.env.GOOGLE_CREDENTIALS as string),
+      keyFile: keyFilePath,
       scopes: ['https://www.googleapis.com/auth/drive'],
     })
 
@@ -16,23 +18,26 @@ export class GoogleDriveService implements DriveServiceInterface {
   }
 
   async listAllInvoiceFilesGroupedByClient(): Promise<Record<string, DriveFile[]>> {
-    const rootFolderId = process.env.GOOGLE_DRIVE_FOLDER_ID as string
+    const faturasFolderId = process.env.GOOGLE_DRIVE_FOLDER_ID as string
+  
     const result: Record<string, DriveFile[]> = {}
-
-    const clientFolders = await this.listFolders(rootFolderId)
-
+  
+    const clientFolders = await this.listFolders(faturasFolderId)
+  
     for (const folder of clientFolders) {
       const files = await this.listFilesInFolder(folder.id)
-
+  
       result[folder.name] = files.map((file) => ({
         id: file.id!,
         name: file.name!,
         mimeType: file.mimeType!,
       }))
     }
-
+  
     return result
   }
+  
+  
 
   async listFolders(parentFolderId: string): Promise<any[]> {
     const res = await this.drive.files.list({
