@@ -76,18 +76,18 @@ export class Server {
   }
 }
 
-const shutdown = async () => {
-  try {
-    logger.info('Gracefully shutting down...')
-    const db = container.resolve<DataBaseInterface<unknown>>('DataBaseService')
-    await db.stop()
-    logger.info('Database disconnected')
-  } catch (error) {
-    logger.error('Error during shutdown:', error)
-  } finally {
-    process.exit(0)
+  const shutdown = async () => {
+    try {
+      logger.info('Gracefully shutting down...')
+      const db = container.resolve<DataBaseInterface<unknown>>('DataBaseService')
+      await db.stop()
+      logger.info('Database disconnected')
+    } catch (error) {
+      logger.error('Error during shutdown:', error)
+    } finally {
+      process.exit(0)
+    }
   }
-}
 
-process.on('SIGINT', shutdown)
-process.on('SIGTERM', shutdown)
+  process.on('SIGINT', shutdown)
+  process.on('SIGTERM', shutdown)

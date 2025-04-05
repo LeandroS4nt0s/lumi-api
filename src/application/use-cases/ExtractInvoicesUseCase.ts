@@ -12,13 +12,13 @@ export class ExtractInvoicesUseCase {
   ) {}
 
   async execute(): Promise<void> {
-    const files = await this.driveService.listAllInvoiceFilesGroupedByClient()
+    const instalationFiles = await this.driveService.listAllInvoiceFilesGroupedByClient()
 
-    for (const clientName in files) {
-      const fileList = files[clientName]
+    for (const instalationNumber in instalationFiles) {
+      const fileList = instalationFiles[instalationNumber]
       for (const file of fileList) {
         const buffer = await this.driveService.downloadFile(file.id)
-        const invoice = await this.extractor.extractFromPDF(buffer, clientName)
+        const invoice = await this.extractor.extractFromPDF(buffer, instalationNumber)
         await this.repository.save(invoice)
       }
     }
