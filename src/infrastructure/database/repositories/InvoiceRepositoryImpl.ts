@@ -12,6 +12,12 @@ export class InvoiceRepositoryImpl implements InvoiceRepositoryInterface {
   constructor(@inject('DataBaseService') dbSource: DataBaseInterface<DataSource>) {
     this.dataSource = dbSource.getInstance()
   }
+  
+  async findAll(): Promise<InvoiceEntity[]> {
+    const repo = this.dataSource.getRepository(InvoiceModel)
+    const results = await repo.find()
+    return results.map(this.toEntity)
+  }
 
   private toEntity(model: InvoiceModel): InvoiceEntity {
     return new InvoiceEntity(

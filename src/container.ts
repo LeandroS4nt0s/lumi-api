@@ -8,10 +8,12 @@ import { DriveServiceInterface } from './domain/services/DriveServiceInterface'
 import { GoogleDriveService } from './infrastructure/external/GoogleDriveService'
 import { InvoiceRepositoryInterface } from './domain/repositories/InvoiceRepositoryInterface'
 import { InvoiceRepositoryImpl } from './infrastructure/database/repositories/InvoiceRepositoryImpl'
+import { ListAllInvoicesUseCase } from './application/use-cases/ListAllInvoicesUseCase'
 
 container.registerSingleton<DataBaseInterface<unknown>>('DataBaseService', MySQLImplementation)
 container.register<InvoiceExtractorInterface>('InvoiceExtractorImpl', PDFInvoiceExtractorImpl)
 container.register<ExtractInvoicesUseCase>('ExtractInvoicesUseCase',ExtractInvoicesUseCase)
+container.register<ListAllInvoicesUseCase>('ListAllInvoicesUseCase',ListAllInvoicesUseCase)
 container.register<DriveServiceInterface>('GoogleDriveService',GoogleDriveService)
 container.register<InvoiceRepositoryInterface>('InvoiceRepositoryImpl', InvoiceRepositoryImpl)
 

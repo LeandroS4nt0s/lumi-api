@@ -1,17 +1,19 @@
 import  {Router} from 'express'
 import { ExtractInvoicesController } from '../controllers/ExtractInvoicesController'
 import { container } from '../../container'
-
+import { ListAllInvoicesController } from '../controllers/ListAllInvoicesController'
 const AppRouter = Router()
 
-const controller = container.resolve(ExtractInvoicesController)
+const extractInvoicesController = container.resolve(ExtractInvoicesController)
+const listAllInvoicesController = container.resolve(ListAllInvoicesController)
 
-AppRouter.get('/hello', (req, res) => {
-  res.send('Hello World')
-})
 
 AppRouter.post('/extract', (req, res, next) => {
-  controller.handle(req, res).then(undefined, next);
+  extractInvoicesController.handle(req, res).then(undefined, next);
+})
+
+AppRouter.get('/invoices', (req, res, next) => {
+  listAllInvoicesController.handle(req, res).then(undefined, next);
 })
 
 export default AppRouter
