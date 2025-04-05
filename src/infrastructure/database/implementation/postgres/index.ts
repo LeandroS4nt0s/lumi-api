@@ -2,16 +2,16 @@ import { DataSource } from 'typeorm'
 import { DataBaseInterface } from '../../databaseInterface'
 import logger from '../../../logger'
 import { injectable } from 'tsyringe'
+import { InvoiceModel } from '../../models/InvoiceModel'
 
 @injectable()
 export class PostgresImplementation implements DataBaseInterface<DataSource> {
   private dataBaseConnection!: DataSource
-
-  constructor() {
-    this.start()
-  }
+  private isInitialized = false
 
   async start(): Promise<void> {
+    if (this.isInitialized) return
+    
     try {
       this.dataBaseConnection = new DataSource({
         type: 'postgres',
@@ -20,21 +20,32 @@ export class PostgresImplementation implements DataBaseInterface<DataSource> {
         username: process.env.POSTGRES_USER || 'root',
         password: process.env.POSTGRES_PASSWORD || 'root',
         database: process.env.POSTGRES_DB || 'lumi_postgresql_db',
-        entities: [],
+        entities: [InvoiceModel],
         synchronize: true,
         logging: false
       })
 
       await this.dataBaseConnection.initialize()
-
-      logger.info( `PostgreSQL connected to database: ${this.dataBaseConnection.options.database} successfully`)
+      this.isInitialized = true
+      logger.info(`[PostgreSQL] Connected to ${this.dataBaseConnection.options.database}`)
       
     } catch (error) {
-      logger.error('PostgreSQL => Error initializing the database:', error)
+      logger.error('[PostgreSQL] Error initializing the database:', error)
     }
   }
 
   getInstance(): DataSource {
+    if (!this.isInitialized) {
+      throw new Error('Database is not initialized. Call start() first.')
+    }
     return this.dataBaseConnection
+  }
+
+  async stop(): Promise<void> {
+    if (this.isInitialized) {
+      await this.dataBaseConnection.destroy()
+      logger.info('[PostgreSQL] Connection closed.')
+      this.isInitialized = false
+    }
   }
 }
