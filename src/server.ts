@@ -87,7 +87,6 @@ export class Server {
       logger.info('Gracefully shutting down...')
       const db = container.resolve<DataBaseInterface<unknown>>('DataBaseService')
       await db.stop()
-      logger.info('Database disconnected')
     } catch (error) {
       logger.error('Error during shutdown:', error)
     } finally {
