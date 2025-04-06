@@ -3,6 +3,8 @@ import { ExtractInvoicesUseCase } from '../../../application/use-cases/invoices/
 import { mockRepository } from "../../mocks/repository"
 import { mockExtractor } from "../../mocks/extractor"
 import { mockDriveService } from "../../mocks/driverService"
+import { fakeInvoice1, fakeInvoice2 } from "../../mocks/fakeInvoices"
+import { InvoiceEntity } from "../../../domain/entities/InvoiceEntity"
 
 describe('ExtractInvoicesUseCase', () => {
   const extractInvoicesUseCase = new ExtractInvoicesUseCase(mockRepository, mockExtractor, mockDriveService)
@@ -21,14 +23,12 @@ describe('ExtractInvoicesUseCase', () => {
 
     const fakeBuffer = Buffer.from('pdf-content')
 
-    const fakeInvoice1 = { id: 'invoice-1' } as any
-    const fakeInvoice2 = { id: 'invoice-2' } as any
 
     mockDriveService.listAllInvoiceFilesGroupedByClient.mockResolvedValue(fakeFilesGrouped)
     mockDriveService.downloadFile.mockResolvedValue(fakeBuffer)
     mockExtractor.extractFromPDF
-      .mockResolvedValueOnce(fakeInvoice1)
-      .mockResolvedValueOnce(fakeInvoice2)
+      .mockResolvedValueOnce(fakeInvoice1 as any)
+      .mockResolvedValueOnce(fakeInvoice2 as any)
 
     await extractInvoicesUseCase.execute()
 
@@ -39,9 +39,7 @@ describe('ExtractInvoicesUseCase', () => {
 
     expect(mockExtractor.extractFromPDF).toHaveBeenCalledTimes(2)
     expect(mockExtractor.extractFromPDF).toHaveBeenCalledWith(fakeBuffer, '1234567890')
-
-    expect(mockRepository.save).toHaveBeenCalledTimes(2)
-    expect(mockRepository.save).toHaveBeenCalledWith(fakeInvoice1)
-    expect(mockRepository.save).toHaveBeenCalledWith(fakeInvoice2)
+    expect(mockRepository.save).toHaveBeenNthCalledWith(1, expect.any(InvoiceEntity))
+    expect(mockRepository.save).toHaveBeenNthCalledWith(2, expect.any(InvoiceEntity))
   })
 })

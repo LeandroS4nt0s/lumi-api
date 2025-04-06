@@ -13,7 +13,8 @@ describe("InvoiceEntity", () => {
       compensatedEnergyKwh: "40",
       compensatedEnergyCost: "25,00",
       lightingContribution: "10,00",
-      amountToPay: "235,00"
+      amountToPay: "235,00",
+      downloadUrl:"download url fake"
     };
 
     const invoice = InvoiceEntity.create(data);
@@ -23,5 +24,6 @@ describe("InvoiceEntity", () => {
     expect(invoice.totalCostWithoutGd).toBe("260,00");
     expect(invoice.gdSavings).toBe("25,00");
     expect(invoice.amountToPay).toBe("235,00");
+    expect(invoice.downloadUrl).toBe("download url fake")
   });
 });
