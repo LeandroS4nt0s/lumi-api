@@ -2,7 +2,7 @@ import  {Router} from 'express'
 import { ExtractInvoicesController } from '../controllers/ExtractInvoicesController'
 import { container } from '../../container'
 import { ListAllInvoicesController } from '../controllers/ListAllInvoicesController'
-import { ListFilteredInvoicesController } from '../controllers/LikstFilteredInvoicesController'
+import { ListFilteredInvoicesController } from '../controllers/ListFilteredInvoicesController'
 const AppRouter = Router()
 
 const extractInvoicesController = container.resolve(ExtractInvoicesController)
