@@ -4,9 +4,11 @@ import cors from 'cors'
 import { config as dotenvConfig } from 'dotenv'
 import logger from './infrastructure/services/internal/logger'
 import AppRouter from './presentation/http'
-import { DataBaseInterface } from './domain/services/databaseInterface'
-import { container } from './container'
 import { errorMiddleware } from './presentation/http/middlewares/errorMiddleware'
+import { runOnStartupDataBaseStartTask } from './infrastructure/services/internal/tasks/runOnStartupDataBaseStartTask'
+import { runOnStartupExtractInvoicesTask } from './infrastructure/services/internal/tasks/runOnStartupExtractInvoicesTask'
+import { runOnShutDownCleanupInvoicesTableTask } from './infrastructure/services/internal/tasks/runOnShutDownCleanupInvoicesTableTask'
+import { runOnShutDownDatabaseDestroyTask } from './infrastructure/services/internal/tasks/runOnShutDownDatabaseDestroyTask'
 
 export class Server {
   private app: Express
@@ -21,7 +23,7 @@ export class Server {
   public async initialize(): Promise<void> {
     try {
       this.loadEnvVariables()
-      await this.initializeDataBaseService()
+      await this.initializeInternalTasks()
       this.setMiddlewares()
       this.setRoutes() 
       this.setErrorHandler()
@@ -62,9 +64,9 @@ export class Server {
     this.app.use('/api', AppRouter)
   }
 
-  private async initializeDataBaseService(): Promise<void> {
-    const DataBaseService = container.resolve<DataBaseInterface<unknown>>('DataBaseService')  
-    await DataBaseService.start()
+  private  async initializeInternalTasks(): Promise<void> {
+    await runOnStartupDataBaseStartTask();
+    await runOnStartupExtractInvoicesTask()
   }
 
   public start(): void {
@@ -81,12 +83,17 @@ export class Server {
     }
   }
 }
+  
 
+  // call to shutDown internal tasks
+  let isShuttingDown = false
   const shutdown = async () => {
+    if (isShuttingDown) return
+    isShuttingDown = true
     try {
       logger.info('Gracefully shutting down...')
-      const db = container.resolve<DataBaseInterface<unknown>>('DataBaseService')
-      await db.stop()
+      await runOnShutDownCleanupInvoicesTableTask()
+      await runOnShutDownDatabaseDestroyTask()
     } catch (error) {
       logger.error('Error during shutdown:', error)
     } finally {
