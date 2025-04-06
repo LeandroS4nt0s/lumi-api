@@ -3,7 +3,7 @@
 
 Este repositório contém a solução backend para o teste técnico da Lumi, desenvolvida com foco em **boas práticas, Clean Architecture, SOLID, injeção de dependência com tsyringe**, e extração inteligente de dados a partir de PDFs de faturas de energia no **Google Drive**.
 
-- OBS: Eu poderia ter feito com NEST JS, mas achei interessante eu mesmo me desafiar a seguir uma arquitetura modular, limpa e com uma pitada de DDD e singleton.
+- OBS: Eu poderia ter feito com NEST JS, mas achei interessante eu mesmo me desafiar a seguir uma arquitetura modular, limpa, com uma pitada de DDD e singleton.
 
 ## 🧠 Diferenciais do Projeto
 
