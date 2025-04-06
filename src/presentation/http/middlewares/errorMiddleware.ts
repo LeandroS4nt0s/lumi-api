@@ -1,4 +1,3 @@
-
 import { Request, Response, NextFunction, ErrorRequestHandler } from 'express'
 import { HttpError } from '../../../domain/erros/HttpError'
 
@@ -25,4 +24,10 @@ export const errorMiddleware: ErrorRequestHandler = (
   } else {
     errorDetail = 'Unknown error'
   }
+
+  res.status(statusCode).json({
+    status: 'error',
+    message,
+    ...(errorDetail && { detail: errorDetail })
+  })
 }

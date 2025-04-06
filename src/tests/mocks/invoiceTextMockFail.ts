@@ -1,0 +1,1 @@
+export const invoiceTextMockFail = `tXTO QUE FALHA`

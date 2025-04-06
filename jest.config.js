@@ -12,6 +12,7 @@ module.exports = {
     '!src/**/logger/**',
     '!src/tests/**',
   ],
+  setupFiles: ['reflect-metadata'],
   coverageDirectory: 'src/tests/coverage',
   coverageThreshold: {
     global: {
