@@ -1,3 +1,9 @@
+/**
+ * @class InvoiceEntity
+ * @description This class is used to represent an invoice entity with various attributes such as customer number, reference month, electricity consumption, costs, and total amount to pay.
+ * It provides a static method to create an instance of the class from raw data, and it includes methods to parse and format the data.
+ */
+
 export class InvoiceEntity {
   constructor(
     public readonly customerNumber: string,

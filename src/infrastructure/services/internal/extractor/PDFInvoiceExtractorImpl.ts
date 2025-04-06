@@ -1,6 +1,13 @@
 import { InvoiceEntity } from '../../../../domain/entities/InvoiceEntity'
+import { InternalServerError } from '../../../../domain/erros/InternalServerError'
 import { InvoiceExtractorInterface } from '../../../../domain/services/InvoiceExtractorInterface'
 import pdfParse from 'pdf-parse'
+
+/**
+ * PDFInvoiceExtractorImpl
+ * @description This class implements the PDFInvoiceExtractorImpl to extract invoice data from PDF files.
+ * It uses the pdf-parse library to parse the PDF files and extract relevant information.
+ */
 
 export class PDFInvoiceExtractorImpl implements InvoiceExtractorInterface {
   async extractFromPDF(buffer: Buffer): Promise<InvoiceEntity> {
@@ -45,13 +52,13 @@ export class PDFInvoiceExtractorImpl implements InvoiceExtractorInterface {
 
   private match(text: string, regex: RegExp): string {
     const result = text.match(regex)
-    if (!result) throw new Error(`Campo não encontrado para regex: ${regex}`)
+    if (!result) throw new InternalServerError(`Field not found for regex: ${regex}`)
     return result[1]
   }
 
   private matchMultiple(text: string, regex: RegExp): string[] {
     const result = text.match(regex)
-    if (!result) throw new Error(`Campo não encontrado para regex: ${regex}`)
+    if (!result) throw new InternalServerError(`Field not found for regex: ${regex}`)
     return result.map(r => r ?? '')
   }
 }

@@ -6,6 +6,12 @@ import { InvoiceModel } from '../models/InvoiceModel'
 import { DataBaseInterface } from '../../../domain/services/databaseInterface'
 import { FilterInvoicesDTO } from '../../../application/use-cases/invoices/dtos/FilterInvoicesDTO'
 
+/**
+ * @class InvoiceRepositoryImpl is used for managing invoices in the database.
+ * It uses TypeORM to interact with the database and perform CRUD operations.
+ * 
+ **/
+
 @injectable()
 export class InvoiceRepositoryImpl implements InvoiceRepositoryInterface {
   private dataSource: DataSource;

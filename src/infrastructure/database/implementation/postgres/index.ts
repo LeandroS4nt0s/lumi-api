@@ -3,6 +3,14 @@ import { DataBaseInterface } from '../../../../domain/services/databaseInterface
 import logger from '../../../services/internal/logger'
 import { injectable } from 'tsyringe'
 import { InvoiceModel } from '../../models/InvoiceModel'
+import { InternalServerError } from '../../../../domain/erros/InternalServerError'
+
+
+/**
+ * @class PostgresImplementation
+ * This class implements the DataBaseInterface for PostgreSQL database using TypeORM.
+ * It provides methods to start, stop, and get the database instance.
+ */
 
 @injectable()
 export class PostgresImplementation implements DataBaseInterface<DataSource> {
@@ -31,12 +39,13 @@ export class PostgresImplementation implements DataBaseInterface<DataSource> {
       
     } catch (error) {
       logger.error('[PostgreSQL] Error initializing the database:', error)
+      throw new InternalServerError('Failed to initialize PostgreSQL database.')
     }
   }
 
   getInstance(): DataSource {
     if (!this.isInitialized) {
-      throw new Error('Database is not initialized. Call start() first.')
+      throw new InternalServerError('Database is not initialized. Call start() first.')
     }
     return this.dataBaseConnection
   }

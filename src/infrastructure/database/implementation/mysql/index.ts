@@ -3,6 +3,13 @@ import { DataBaseInterface } from "../../../../domain/services/databaseInterface
 import { injectable } from "tsyringe"
 import logger from "../../../services/internal/logger"
 import { InvoiceModel } from "../../models/InvoiceModel"
+import { InternalServerError } from "../../../../domain/erros/InternalServerError"
+
+/**
+ * @class MySQLImplementation
+ * This class implements the DataBaseInterface for MySQL database using TypeORM.
+ * It provides methods to start, stop, and get the database instance.
+ */
 
 @injectable()
 export class MySQLImplementation implements DataBaseInterface<DataSource> {
@@ -28,15 +35,19 @@ export class MySQLImplementation implements DataBaseInterface<DataSource> {
       await this.dataBaseConnection.initialize()
       this.isInitialized = true
       logger.info(`[MySQL] Connected to ${this.dataBaseConnection.options.database}`)
+
     } catch (error) {
       logger.error('[MySQL] Error initializing the database:', error)
+      throw new InternalServerError('Failed to initialize MySQL database.')
     }
   }
 
   getInstance(): DataSource {
+    
     if (!this.isInitialized) {
-      throw new Error('Database is not initialized. Call start() first.')
+      throw new InternalServerError('Database is not initialized. Call start() first.')
     }
+
     return this.dataBaseConnection
   }
 

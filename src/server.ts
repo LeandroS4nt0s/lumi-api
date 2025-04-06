@@ -6,6 +6,7 @@ import logger from './infrastructure/services/internal/logger'
 import AppRouter from './presentation/http'
 import { DataBaseInterface } from './domain/services/databaseInterface'
 import { container } from './container'
+import { errorMiddleware } from './presentation/http/middlewares/errorMiddleware'
 
 export class Server {
   private app: Express
@@ -20,9 +21,10 @@ export class Server {
   public async initialize(): Promise<void> {
     try {
       this.loadEnvVariables()
-      this.setMiddlewares()
       await this.initializeDataBaseService()
-      this.setRoutes()
+      this.setMiddlewares()
+      this.setRoutes() 
+      this.setErrorHandler()
     } catch (error) {
       this.handleError(error)
     }
@@ -46,6 +48,10 @@ export class Server {
   private setMiddlewares(): void {
     this.app.use(cors({ origin: this.getCorsOptions() }))
     this.app.use(express.json())
+  }
+
+  private setErrorHandler(): void {
+    this.app.use(errorMiddleware)
   }
 
   private getCorsOptions(): string {

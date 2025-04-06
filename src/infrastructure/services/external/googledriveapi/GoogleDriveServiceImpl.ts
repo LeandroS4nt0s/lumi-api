@@ -2,6 +2,13 @@ import { google } from 'googleapis'
 import { injectable } from 'tsyringe'
 import { DriveFile, DriveServiceInterface } from '../../../../domain/services/DriveServiceInterface'
 
+
+/*** 
+ * GoogleDriveServiceImpl
+ * @description This class implements the GoogleDriveServiceImpl to interact with Google Drive API.
+ * It provides methods to list all invoice files grouped by client and download files from Google Drive.
+*/
+
 @injectable()
 export class GoogleDriveServiceImpl implements DriveServiceInterface {
   private drive
@@ -37,9 +44,7 @@ export class GoogleDriveServiceImpl implements DriveServiceInterface {
     return result
   }
   
-  
-
-  async listFolders(parentFolderId: string): Promise<any[]> {
+  private async listFolders(parentFolderId: string): Promise<any[]> {
     const res = await this.drive.files.list({
       q: `'${parentFolderId}' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false`,
       fields: 'files(id, name)',
@@ -48,7 +53,7 @@ export class GoogleDriveServiceImpl implements DriveServiceInterface {
     return res.data.files || []
   }
 
-  async listFilesInFolder(folderId: string): Promise<any[]> {
+  private async listFilesInFolder(folderId: string): Promise<any[]> {
     const res = await this.drive.files.list({
       q: `'${folderId}' in parents and mimeType != 'application/vnd.google-apps.folder' and trashed = false`,
       fields: 'files(id, name, mimeType)',
