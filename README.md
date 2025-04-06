@@ -38,6 +38,12 @@ npm install
 docker compose up
 ```
 
+### 3. Rode o servidor
+
+```bash
+npm run start
+```
+
 
 ## 🧪 Testes
 
