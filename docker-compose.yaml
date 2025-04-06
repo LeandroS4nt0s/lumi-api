@@ -1,13 +1,6 @@
 version: '3'
 
 services:
-  app:
-    build: .
-    ports:
-      - "3000:3000"
-    volumes:
-      - .:/home/node/app
-
   db_mysql:
     image: mysql:8.0-oracle
     container_name: mysql_container

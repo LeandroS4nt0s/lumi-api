@@ -26,6 +26,7 @@ Este repositório contém a solução backend para o teste técnico da Lumi, des
 git clone https://github.com/LeandroS4nt0s/lumi-api.git
 cd lumi-api
 npm install
+npm run build
 ```
 
 ### 2. Configure o ambiente
