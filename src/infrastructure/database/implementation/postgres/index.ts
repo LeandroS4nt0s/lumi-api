@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm'
-import { DataBaseInterface } from '../../databaseInterface'
-import logger from '../../../logger'
+import { DataBaseInterface } from '../../../../domain/services/databaseInterface'
+import logger from '../../../services/internal/logger'
 import { injectable } from 'tsyringe'
 import { InvoiceModel } from '../../models/InvoiceModel'
 

@@ -2,9 +2,9 @@ import 'reflect-metadata'
 import express, { Express } from 'express'
 import cors from 'cors'
 import { config as dotenvConfig } from 'dotenv'
-import logger from './infrastructure/logger'
+import logger from './infrastructure/services/internal/logger'
 import AppRouter from './presentation/http'
-import { DataBaseInterface } from './infrastructure/database/databaseInterface'
+import { DataBaseInterface } from './domain/services/databaseInterface'
 import { container } from './container'
 
 export class Server {

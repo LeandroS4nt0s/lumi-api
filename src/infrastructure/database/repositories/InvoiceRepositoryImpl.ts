@@ -3,7 +3,7 @@ import { DataSource } from 'typeorm'
 import { InvoiceRepositoryInterface } from '../../../domain/repositories/InvoiceRepositoryInterface'
 import { InvoiceEntity } from '../../../domain/entities/InvoiceEntity'
 import { InvoiceModel } from '../models/InvoiceModel'
-import { DataBaseInterface } from '../databaseInterface'
+import { DataBaseInterface } from '../../../domain/services/databaseInterface'
 import { FilterInvoicesDTO } from '../../../application/use-cases/invoices/dtos/FilterInvoicesDTO'
 
 @injectable()
@@ -59,12 +59,6 @@ export class InvoiceRepositoryImpl implements InvoiceRepositoryInterface {
     const repo = this.dataSource.getRepository(InvoiceModel)
     const model = this.toModel(invoice)
     await repo.save(model)
-  }
-
-  async findByClient(clientNumber: string): Promise<InvoiceEntity[]> {
-    const repo = this.dataSource.getRepository(InvoiceModel)
-    const results = await repo.find({ where: { customerNumber: clientNumber } })
-    return results.map(this.toEntity)
   }
 
   async findByFilters(filtersDTO: FilterInvoicesDTO): Promise<InvoiceEntity[]> {

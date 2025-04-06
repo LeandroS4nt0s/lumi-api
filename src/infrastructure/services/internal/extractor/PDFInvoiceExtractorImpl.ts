@@ -1,5 +1,5 @@
-import { InvoiceEntity } from '../../domain/entities/InvoiceEntity'
-import { InvoiceExtractorInterface } from '../../domain/services/InvoiceExtractorInterface'
+import { InvoiceEntity } from '../../../../domain/entities/InvoiceEntity'
+import { InvoiceExtractorInterface } from '../../../../domain/services/InvoiceExtractorInterface'
 import pdfParse from 'pdf-parse'
 
 export class PDFInvoiceExtractorImpl implements InvoiceExtractorInterface {

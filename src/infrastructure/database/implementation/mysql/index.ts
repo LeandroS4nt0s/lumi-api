@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm"
-import { DataBaseInterface } from "../../databaseInterface"
+import { DataBaseInterface } from "../../../../domain/services/databaseInterface"
 import { injectable } from "tsyringe"
-import logger from "../../../logger"
+import logger from "../../../services/internal/logger"
 import { InvoiceModel } from "../../models/InvoiceModel"
 
 @injectable()

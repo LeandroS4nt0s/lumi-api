@@ -1,9 +1,9 @@
 import { google } from 'googleapis'
 import { injectable } from 'tsyringe'
-import { DriveFile, DriveServiceInterface } from '../../domain/services/DriveServiceInterface'
+import { DriveFile, DriveServiceInterface } from '../../../../domain/services/DriveServiceInterface'
 
 @injectable()
-export class GoogleDriveService implements DriveServiceInterface {
+export class GoogleDriveServiceImpl implements DriveServiceInterface {
   private drive
 
   constructor() {
