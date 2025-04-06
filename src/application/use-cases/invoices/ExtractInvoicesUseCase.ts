@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe'
 import { InvoiceRepositoryInterface } from '../../../domain/repositories/InvoiceRepositoryInterface'
 import { InvoiceExtractorInterface } from '../../../domain/services/InvoiceExtractorInterface'
 import { DriveServiceInterface } from '../../../domain/services/DriveServiceInterface'
+import { InvoiceEntity } from '../../../domain/entities/InvoiceEntity'
 
 /**
  * Use case for extracting invoices from Google Drive and saving them to the database.
@@ -29,7 +30,14 @@ export class ExtractInvoicesUseCase {
       for (const file of fileList) {
         const buffer = await this.driveService.downloadFile(file.id)
         const invoice = await this.extractor.extractFromPDF(buffer, instalationNumber)
-        await this.repository.save(invoice)
+        const downloadUrl = `https://drive.google.com/uc?id=${file.id}&export=download`;
+        
+        const invoiceWithDownload = InvoiceEntity.create({
+          ...invoice,
+          downloadUrl 
+        })
+
+        await this.repository.save(invoiceWithDownload)
       }
     }
   }

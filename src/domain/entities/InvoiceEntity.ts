@@ -17,7 +17,8 @@ export class InvoiceEntity {
     public readonly lightingContribution: string,
     public readonly totalCostWithoutGd: string,
     public readonly gdSavings: string,
-    public readonly amountToPay: string
+    public readonly amountToPay: string,
+    public readonly downloadUrl?: string
   ) {}
 
   static create(data: Omit<InvoiceEntity, "totalCostWithoutGd" | "gdSavings">): InvoiceEntity {
@@ -45,7 +46,8 @@ export class InvoiceEntity {
       data.lightingContribution,
       totalCostWithoutGd,
       gdSavings,
-      data.amountToPay
+      data.amountToPay,
+      data.downloadUrl
     );
   }
 }

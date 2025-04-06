@@ -39,7 +39,8 @@ export class InvoiceRepositoryImpl implements InvoiceRepositoryInterface {
       model.lightingContribution,
       model.totalCostWithoutGd,
       model.gdSavings,
-      model.amountToPay
+      model.amountToPay,
+      model.downloadUrl ?? undefined
     )
   }
 
@@ -57,7 +58,7 @@ export class InvoiceRepositoryImpl implements InvoiceRepositoryInterface {
     model.totalCostWithoutGd = entity.totalCostWithoutGd
     model.gdSavings = entity.gdSavings
     model.amountToPay = entity.amountToPay
-
+    model.downloadUrl = entity.downloadUrl ?? null
     return model
   }
 

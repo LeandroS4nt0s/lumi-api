@@ -45,4 +45,7 @@ export class InvoiceModel {
 
   @Column()
   amountToPay!: string
+
+  @Column({ type: 'varchar', nullable: true })
+  downloadUrl!: string | null;
 }
